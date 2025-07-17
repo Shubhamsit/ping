@@ -117,7 +117,7 @@ export const LogOut = async (req, res) => {
   try {
     res.clearCookie("jwt", {
       httpOnly: true,
-      secure: false,
+      secure: true,
       path: "/",
     });
 
