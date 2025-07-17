@@ -1,15 +1,147 @@
-const express = require('express');
-const http = require('http');
-const {Server} = require('socket.io');
-const cors = require('cors');
-const registerSocketHandlers = require('./socket');
-require('dotenv').config();
+// const express = require('express');
+// const http = require('http');
+// const {Server} = require('socket.io');
+// const cors = require('cors');
+// const registerSocketHandlers = require('./socket');
+// const { dbConnect } = require('./db/dbConnect');
+// require('dotenv').config();
+
+// const app = express();
+
+// const allowedOrigins = [
+//   'https://krishan-video-call-app.netlify.app',
+//   'http://localhost:5173'
+// ];
+
+// let frontendUrl = process.env.FRONTEND_URL;
+// if (frontendUrl) {
+//   if (!frontendUrl.startsWith('http')) {
+//     frontendUrl = 'https://' + frontendUrl;
+//   }
+//   if (!allowedOrigins.includes(frontendUrl)) {
+//     allowedOrigins.push(frontendUrl);
+//   }
+// }
+
+// console.log('CORS allowed origins:', allowedOrigins);
+
+// app.use((req, res, next) => {
+//   const origin = req.headers.origin;
+//   if (allowedOrigins.includes(origin)) {
+//     res.setHeader('Access-Control-Allow-Origin', origin);
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+//     res.setHeader('Access-Control-Allow-Credentials', 'true');
+//   }
+//   next();
+// });
+
+// app.use(cors({
+//   origin: function(origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       console.log('CORS blocked origin:', origin);
+//       callback(null, false);
+//     }
+//   },
+//   methods: ['GET', 'POST'],
+//   credentials: true
+// }));
+
+// const server = http.createServer(app);
+
+// const io = new Server(server, {
+//   cors: {
+//     origin: function(origin, callback) {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, origin);
+//       } else {
+//         console.log('Socket.IO CORS blocked origin:', origin);
+//         callback(new Error('Not allowed by CORS'));
+//       }
+//     },
+//     methods: ['GET', 'POST'],
+//     credentials: true
+//   },
+//   pingTimeout: 60000,
+//   transports: ['polling', 'websocket']
+// });
+
+// io.on('connection', (socket) => {
+//     console.log('New socket connection:', socket.id);
+// });
+
+// registerSocketHandlers(io);
+
+// app.get('/', (req, res) => {
+//     res.send('Video Call Server is running');
+// });
+
+// app.get('/health', (req, res) => {
+//     res.status(200).json({ 
+//         status: 'ok', 
+//         connections: io.engine.clientsCount,
+//         allowedOrigins: allowedOrigins 
+//     });
+// });
+
+// server.on('error', (error) => {
+//     console.error('Server error:', error);
+// });
+
+// const PORT = process.env.PORT || 8000;
+
+// dbConnect()
+// .then(()=>{
+
+
+//      server.listen(PORT, () => {
+//     console.log(`Server is running at http://localhost:${PORT}`);
+//     console.log(`CORS configured for: ${allowedOrigins.join(', ')}`);
+// });
+
+// })
+// .catch((error)=>{
+
+//   console.log("error in coneection",error);
+  
+// })
+
+
+
+
+
+
+
+
+
+
+
+// server.js (or index.js)
+
+import express from 'express';
+import http from 'http';
+import { Server } from 'socket.io';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import registerSocketHandlers from './socket.js';
+import { dbConnect } from './db/dbConnect.js';
+import authRouter from './routes/authRoute.js'
+import userRouter from './routes/userRoute.js';
+import cookieParser from 'cookie-parser';
+
+
+
+
+dotenv.config();
 
 const app = express();
 
 const allowedOrigins = [
   'https://krishan-video-call-app.netlify.app',
-  'http://localhost:5173'
+  'http://localhost:5173',
+  'http://10.173.226.1:5173'
+
 ];
 
 let frontendUrl = process.env.FRONTEND_URL;
@@ -23,6 +155,9 @@ if (frontendUrl) {
 }
 
 console.log('CORS allowed origins:', allowedOrigins);
+
+app.use(express.json());
+app.use(cookieParser());
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
@@ -44,8 +179,19 @@ app.use(cors({
     }
   },
   methods: ['GET', 'POST'],
-  credentials: true
+  credentials: true,
 }));
+
+
+// routes miidleware
+
+
+app.use('/api/auth',authRouter);
+app.use('/api/user',userRouter);
+
+
+
+
 
 const server = http.createServer(app);
 
@@ -60,36 +206,43 @@ const io = new Server(server, {
       }
     },
     methods: ['GET', 'POST'],
-    credentials: true
+    credentials: true,
   },
   pingTimeout: 60000,
-  transports: ['polling', 'websocket']
+  transports: ['polling', 'websocket'],
 });
 
 io.on('connection', (socket) => {
-    console.log('New socket connection:', socket.id);
+  console.log('New socket connection:', socket.id);
 });
 
 registerSocketHandlers(io);
 
 app.get('/', (req, res) => {
-    res.send('Video Call Server is running');
+  res.send('Video Call Server is running');
 });
 
 app.get('/health', (req, res) => {
-    res.status(200).json({ 
-        status: 'ok', 
-        connections: io.engine.clientsCount,
-        allowedOrigins: allowedOrigins 
-    });
+  res.status(200).json({
+    status: 'ok',
+    connections: io.engine.clientsCount,
+    allowedOrigins: allowedOrigins,
+  });
 });
 
 server.on('error', (error) => {
-    console.error('Server error:', error);
+  console.error('Server error:', error);
 });
 
 const PORT = process.env.PORT || 8000;
-server.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`);
-    console.log(`CORS configured for: ${allowedOrigins.join(', ')}`);
-});
+
+dbConnect()
+  .then(() => {
+    server.listen(PORT, () => {
+      console.log(`Server is running at http://localhost:${PORT}`);
+      console.log(`CORS configured for: ${allowedOrigins.join(', ')}`);
+    });
+  })
+  .catch((error) => {
+    console.log('Error in DB connection:', error);
+  });

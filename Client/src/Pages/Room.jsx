@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import { Mic, MicOff, Video, VideoOff, Phone } from "lucide-react";
 import "./Room.css";
+import { useAuth } from "../context/AuthContext";
+import CopyButton from "../components/CopyButton";
 
 const baseUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 const socket = io(baseUrl, {
@@ -14,6 +16,9 @@ const socket = io(baseUrl, {
 export default function Room() {
   const { roomId } = useParams();
   const navigate = useNavigate();
+
+const {user}=useAuth();
+
 
   // State variables
   const [remoteUsers, setRemoteUsers] = useState([]);
@@ -344,7 +349,9 @@ export default function Room() {
   return (
     <div className="room-container">
       <div className="room-header">
+     
         <h2 className="room-title">Room Id: {roomId}</h2>
+          <div className="mr-30 md:mr-250"> <CopyButton className='' textToCopy={`https://your-link.com/room/${roomId}`}/></div>
         <div className={`status-indicator ${connectionStatus}`}>
           <div className={`status-dot ${connectionStatus}`} />
           {connectionStatus === "connected" ? "Connected" : "Connecting..."}
@@ -364,7 +371,7 @@ export default function Room() {
             style={{ display: isVideoEnabled ? "block" : "none" }}
           />
           <div className="video-label">
-            <span className="video-name">You</span>
+            <span className="video-name">{user.name}</span>
             <span className={`video-status ${isMuted ? "muted" : "active"}`}>
               {isMuted ? (
                 <>
@@ -397,7 +404,8 @@ export default function Room() {
               }}
             />
             <div className="video-label">
-              <span className="video-name">User {userId.substring(0, 6)}</span>
+              {/* <span className="video-name">User {userId.substring(0, 6)}</span> */}
+              <span className="video-name">{user.name}</span>
               {activeSpeaker === userId && (
                 <span className="video-status speaking">
                   <Mic size={12} /> Speaking
