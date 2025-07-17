@@ -140,7 +140,8 @@ const app = express();
 const allowedOrigins = [
   'https://krishan-video-call-app.netlify.app',
   'http://localhost:5173',
-  'http://10.173.226.1:5173'
+  'http://10.173.226.1:5173',
+  'https://ping-black.vercel.app'
 
 ];
 
@@ -163,7 +164,7 @@ app.use((req, res, next) => {
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST','OPTIONS');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
   }
   next();

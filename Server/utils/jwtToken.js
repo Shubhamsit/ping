@@ -14,9 +14,9 @@ console.log(userId.toString(),"tostring bhai");
   res.cookie("jwt", token, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-    // sameSite: "None",
-    sameSite: "Lax",
-    secure: false,
+    sameSite: "None",
+    // sameSite: "Lax",
+    secure:true,
     path: "/",
   });
 

@@ -61,6 +61,9 @@ export const signUp = async (req, res) => {
 
 export const Login = async (req, res) => {
   try {
+
+    console.log("login tak pahucha");
+    
     const { email, password } = req.body;
     const user = await User.findOne({ email });
 
