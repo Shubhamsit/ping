@@ -119,6 +119,7 @@ export const LogOut = async (req, res) => {
       httpOnly: true,
       secure: true,
       path: "/",
+      sameSite: "None",
     });
 
     res.status(200).send({success:true,message:"user Logout"})
