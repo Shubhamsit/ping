@@ -7,9 +7,10 @@ function HeroSection() {
   return (
     <div className="bg-gray-900 text-white h-screen flex flex-col md:flex-row justify-center items-center px-6 sm:px-8 md:px-12">
       {/* Left Side - Typing Animation */}
+
       <div className="md:w-3/6 text-center md:text-left px-4 sm:px-8">
         <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight">
-         Seamless Meetings 
+          Seamless Meetings
           <br />
           Limitless
           <br /> Ideas.

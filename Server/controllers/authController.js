@@ -1,8 +1,6 @@
-import bcrypt from "bcryptjs"; 
-import User from "../model/UserSchema.js"; 
+import bcrypt from "bcryptjs";
+import User from "../model/UserSchema.js";
 import jwtToken from "../utils/jwtToken.js";
-
-
 
 export const signUp = async (req, res) => {
   try {
@@ -42,11 +40,8 @@ export const signUp = async (req, res) => {
     // Send success response
 
     res.status(201).json({ success: true, message: "Sign Up Successful" });
-
   } catch (error) {
-
     console.error("Signup Error:", error);
-  
 
     res.status(500).json({
       success: false,
@@ -55,20 +50,17 @@ export const signUp = async (req, res) => {
   }
 };
 
-
-// Login 
-
+// Login
 
 export const Login = async (req, res) => {
   try {
+   
 
-    console.log("login tak pahucha");
-    
     const { email, password } = req.body;
     const user = await User.findOne({ email });
 
-    console.log(user,"dekh bhai user");
-    
+
+
     if (!user)
       return res
         .status(404)
@@ -82,21 +74,18 @@ export const Login = async (req, res) => {
         message: "Email Or Password dosen't Matching",
       });
 
-      console.log(user._id,"vhai token id");
-      
+ 
 
     const token = jwtToken(user._id, res);
-    console.log(token,"token aaya gen hoke");
-
-  
+ 
 
     res.status(200).json({
-        success:true,
-    user: {
-    _id: user._id.toString(),
-    name: user.name,
-    email: user.email,
-  },
+      success: true,
+      user: {
+        _id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+      },
       message: "Succesfully LogIn",
       token,
     });
@@ -109,9 +98,7 @@ export const Login = async (req, res) => {
   }
 };
 
-
 // Logout
-
 
 export const LogOut = async (req, res) => {
   try {
@@ -122,15 +109,12 @@ export const LogOut = async (req, res) => {
       sameSite: "None",
     });
 
-    res.status(200).send({success:true,message:"user Logout"})
-
-
+    res.status(200).send({ success: true, message: "user Logout" });
   } catch (error) {
     res.status(500).send({
       success: false,
       message: error,
     });
     console.log(error);
-
   }
 };

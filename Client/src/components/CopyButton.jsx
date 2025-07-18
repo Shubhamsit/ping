@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 function CopyButton({ textToCopy }) {
   const [copied, setCopied] = useState(false);
@@ -7,9 +8,11 @@ function CopyButton({ textToCopy }) {
     try {
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
+      toast.success("Link copied!");
       setTimeout(() => setCopied(false), 1500);
     } catch (err) {
       console.error("Failed to copy: ", err);
+      toast.error("Failed to copy");
     }
   };
 

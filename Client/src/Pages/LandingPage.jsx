@@ -177,6 +177,7 @@ import HeroSectionImage from "../assets/herosectionImage.png";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
+import { toast } from "react-toastify";
 
 export default function LandingPage() {
   const [roomInput, setRoomInput] = useState("");
@@ -202,7 +203,8 @@ export default function LandingPage() {
     if (roomId) {
       navigate(`/room/${roomId}`);
     } else {
-      alert("Please enter a valid Room ID or link");
+      // alert("Please enter a valid Room ID or link");
+      toast.warn("Please enter a valid Room ID or link");
     }
   };
 

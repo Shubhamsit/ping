@@ -11,6 +11,10 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+
+
+// fetchUser
+
   const fetchLoggedInUser = async () => {
     try {
       const { data } = await axios.get(backendUrl + "/api/user/me", {
@@ -35,6 +39,8 @@ export const AuthProvider = ({ children }) => {
     fetchLoggedInUser();
   }, []);
 
+// Login
+
   const login = async (email, password) => {
     try {
       const { data } = await axios.post(
@@ -46,17 +52,16 @@ export const AuthProvider = ({ children }) => {
       if (data.success) {
         setUser(data.user);
         toast.success(data.message);
-      }
-
-      else{
-        toast.error(data.message)
-
+      } else {
+        toast.error(data.message);
       }
     } catch (error) {
       console.log(error);
-       toast.error(error);
+      toast.error(error);
     }
   };
+
+// signUp
 
   const signup = async (name, email, password) => {
     try {
@@ -74,9 +79,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+// logout
+
   const logout = async () => {
     try {
-      const { data } = await axios.get(backendUrl+"/api/auth/logout", {
+      const { data } = await axios.get(backendUrl + "/api/auth/logout", {
         withCredentials: true,
       });
 

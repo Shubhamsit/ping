@@ -130,17 +130,13 @@ import authRouter from './routes/authRoute.js'
 import userRouter from './routes/userRoute.js';
 import cookieParser from 'cookie-parser';
 
-
-
-
 dotenv.config();
 
 const app = express();
 
 const allowedOrigins = [
-  'https://krishan-video-call-app.netlify.app',
+
   'http://localhost:5173',
-  'http://10.173.226.1:5173',
   'https://ping-black.vercel.app'
 
 ];
@@ -189,10 +185,6 @@ app.use(cors({
 
 app.use('/api/auth',authRouter);
 app.use('/api/user',userRouter);
-
-
-
-
 
 const server = http.createServer(app);
 
