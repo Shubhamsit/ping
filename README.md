@@ -2,10 +2,7 @@
 
 A full-stack real-time video and audio communication platform built with modern web technologies. This app enables users to join virtual rooms, authenticate securely, and interact via high-quality peer-to-peer connections.
 
-<!-- ## 🔗 Live Demo  
-👉 [https://krishan-video-call-app.netlify.app](https://krishan-video-call-app.netlify.app) -->
 
----
 
 ##  Key Features
 
@@ -74,7 +71,7 @@ The application leverages WebRTC for peer-to-peer media streaming, with a Node.j
 
 ##  Deployment
 
-- **Frontend**: Deployed on [Vercel](https://netlify.com)
+- **Frontend**: Deployed on [Vercel](https://vercel.com/)
 - **Backend**: Hosted on [Render](https://render.com)
 - **Database**: MongoDB Atlas 
 
