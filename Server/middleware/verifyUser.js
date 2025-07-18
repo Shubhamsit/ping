@@ -1,14 +1,9 @@
 import jwt from "jsonwebtoken";
 
 export const verifyUser = (req, res, next) => {
+  console.log(req.cookies);
 
-    console.log(req.cookies);
-    
   const token = req.cookies?.jwt;
-
-
-  console.log(token,"bro token");
-  
 
   if (!token) return res.status(401).json({ message: "Not logged in" });
 

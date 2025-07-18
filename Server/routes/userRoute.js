@@ -4,6 +4,6 @@ import { verifyUser } from "../middleware/verifyUser.js";
 
 const userRouter = Router();
 
-userRouter.get("/me", verifyUser, getUser); 
+userRouter.get("/me", verifyUser, getUser);
 
 export default userRouter;
