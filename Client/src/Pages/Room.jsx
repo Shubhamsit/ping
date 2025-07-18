@@ -351,7 +351,7 @@ const {user}=useAuth();
       <div className="room-header">
      
         <h2 className="room-title">Room Id: {roomId}</h2>
-          <div className="mr-30 md:mr-250"> <CopyButton className='' textToCopy={`https://ping-black.vercel.app/room/${roomId}`}/></div>
+          <div className=" mr-2 md:mr-250 "> <CopyButton className='' textToCopy={`https://ping-black.vercel.app/room/${roomId}`}/></div>
         <div className={`status-indicator ${connectionStatus}`}>
           <div className={`status-dot ${connectionStatus}`} />
           {connectionStatus === "connected" ? "Connected" : "Connecting..."}
@@ -404,8 +404,8 @@ const {user}=useAuth();
               }}
             />
             <div className="video-label">
-              {/* <span className="video-name">User {userId.substring(0, 6)}</span> */}
-              <span className="video-name">{user.name}</span>
+              <span className="video-name">User {userId.substring(0, 6)}</span>
+              {/* <span className="video-name">{user.name}</span> */}
               {activeSpeaker === userId && (
                 <span className="video-status speaking">
                   <Mic size={12} /> Speaking
