@@ -19,7 +19,9 @@ const app = express();
 const allowedOrigins = [
 
   'http://localhost:5173',
-  'https://ping-black.vercel.app'
+  'https://ping-black.vercel.app',
+  'https://ping.iamshubham.info',
+
 
 ];
 
