@@ -351,7 +351,7 @@ const {user}=useAuth();
       <div className="room-header">
      
         <h2 className="room-title">Room Id: {roomId}</h2>
-          <div className=" mr-2 md:mr-250 "> <CopyButton className='' textToCopy={`https://ping-black.vercel.app/room/${roomId}`}/></div>
+          <div className=" mr-2 md:mr-250 "> <CopyButton className='' textToCopy={`https://ping.iamshubham.info/room/${roomId}`}/></div>
         <div className={`status-indicator ${connectionStatus}`}>
           <div className={`status-dot ${connectionStatus}`} />
           {connectionStatus === "connected" ? "Connected" : "Connecting..."}
